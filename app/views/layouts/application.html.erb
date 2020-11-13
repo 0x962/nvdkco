@@ -15,7 +15,21 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
+  
+  <%= yield %>
+  
+
+  <style>
+    .gradient {
+        <%= @gradient %>
+    }
+    .hover\:text-gradient:hover {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .text-gradient {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+  </style>
 </html>

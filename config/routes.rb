@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :pages do 
     collection do 
         get :home
+        get :about
         get :contact
+        get :writing
     end
   end
 
