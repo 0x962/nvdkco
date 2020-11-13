@@ -1,0 +1,30 @@
+<section class="flex h-screen">
+    <div class="lg:w-2/3 mx-4 m-auto lg:m-auto">
+        <div class="h-50">
+            <span class="text-gradient gradient text-6xl font-extrabold inline cursor-pointer"><a href="mailto:n@nvdk.co" target="_blank">n@nvdk.co</a></span><span class="hidden text-gradient gradient text-6xl font-extrabold inline-block dv-entry">.</span>
+        </div>
+    </div>
+</section>
+
+<style>
+    .gradient {
+        <%= @gradient %>
+    }
+    .hover\:text-gradient:hover {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .text-gradient {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        window.setTimeout(function() {
+            $('.dv-entry').removeClass('hidden');
+            $('.dv-entry').addClass('animate__animated animate__bounce');
+        }, 1000);
+    })
+</script>
