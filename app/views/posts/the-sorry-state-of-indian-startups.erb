@@ -1,0 +1,21 @@
+<%= render 'pages/header' %>
+
+<section>
+    <article class="mx-4 lg:m-auto lg:w-2/3">
+        <h1 class="text-5xl lg:text-6xl my-8 text-black font-extrabold tracking-tighter italic leading-tight lg:-mx-12"><%= @post.title %></h1>
+        <div class="my-8 tracking-tight text-gray-600 font-semibold">
+            <span class="" title=<%= @post.created_at %>><%= @post.created_at.to_i %></span>
+
+            <span class="mx-4 p-4 border-l-2 border-gray-300 text-gray-500 font-normal">
+                <a href="/pages/about" class="border-none">
+                    <span class="ss-twitter align-middle"></span> N
+                </a>
+            </span>
+        </div>
+        <div class="text-xl subpixel-antialiased words leading-relaxed mt-10">
+            <p>I have been a part of the Indian start-up ecosystem for all of my career. I am fond of it for several reasons, but I am also furious. </p>
+        </div>
+    </article>
+</section>
+
+<%= render 'pages/footer' %>

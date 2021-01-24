@@ -10,5 +10,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :posts do
+    collection do 
+      get :show
+    end
+  end
+
   root to: 'pages#home'
 end

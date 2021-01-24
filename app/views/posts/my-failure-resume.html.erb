@@ -1,0 +1,75 @@
+<%= render 'pages/header' %>
+
+<section class="mb-10">
+    <article class="mx-4 lg:m-auto lg:w-2/3">
+        <h1 class="text-5xl lg:text-6xl my-8 text-black font-extrabold tracking-tighter italic leading-tight lg:-mx-12"><%= @post.title %></h1>
+        <div class="my-8 tracking-tight text-gray-600 font-semibold">
+            <span class="" title=<%= @post.created_at %>><%= @post.created_at.strftime('%d %B %Y') %></span>
+
+            <span class="mx-4 p-4 border-l-2 border-gray-300 text-gray-500 font-normal">
+                <a href="/pages/about" class="border-none">
+                    <span class="ss-twitter align-middle"></span> <%= @post.view_count %> views
+                </a>
+            </span>
+        </div>
+        <div class="text-xl subpixel-antialiased words leading-relaxed mt-10">
+            <p>Dropping out of college was the milestone that graduation is for most people in the world and yes, I am well aware that the world’s most successful entrepreneurs, thinkers and leaders were once drop-outs but in India, it’s only for those that can’t ‘do’ and perhaps never will.. but that’s for another day -- another blog!</p>
+            <p>That disruption gained me access to unique opportunities and experiences -- unthinkable then to a 19 year old boy from <a class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold" href='https://en.wikipedia.org/wiki/Siliguri'>Siliguri</a> -- that would've never come my way had I been placed at an Accenture or Wipro. I worked harder in my 8 -14 hour work day than I would for weeks at end on campus, building a diverse range of skills from the get-go, negotiation skills, interpersonal skills that would've taken far more than 3 Group Discussions in Semester 5 with 12 classmates.</p>
+            <p>I built a company from scratch when I was 19, long before I understood the differences between an LLP and PLC. When I say I built a company, I mean - I found a Chartered Accountant on <a target="_blank" href="https://www.urbancompany.com/delhi-ncr" class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold">UrbanClap</a> ($ 100), borrowed a lakh from my father that was earmarked for a semester’s tuition, booked a Single Room on <a target="_blank" href="https://www.nestaway.com/" class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold">Nestaway</a> ($ 2/night)  and hired a <a target="_blank" href="https://www.zoomcar.com/" class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold">Zoomcar</a> to Gurgaon ($ 20/day) - and hit the ground running at 6 am the very next day out of <a target="_blank" href="https://www.91springboard.com/" class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold">91Springboard</a> (ironically the cheapest of all expenses for $5/day/desk). </p>
+            <p>Over the next 30 days, I recruited the first few founding members of my then nameless company, people who would come to be my closest friends. People who believed in a 19 year old boy and his passionate elevator pitch (and subsequent TED talks) so much, they picked his 1 man company over their failsafe college recruitment offers, their dad’s business, and perhaps their own personal ambitions too.</p>
+        </div>
+        <%= image_tag 'my-failure-resume/team-1.jpeg', class: 'rounded-3xl', style: 'width: 120%' %>
+        <div class="flex w-full items-center justify-center mt-1"><span class="caption">The Team, Big Drop, Month 12</span></div>
+
+        <div class="text-xl subpixel-antialiased words leading-relaxed mt-10">
+            <p>Over the course of the next 4 odd years, we joined an accelerator, got funded, got acquired, experienced unthinkable successes, and crushing failures. We moved through three workspaces, built over 300 different products for our customers, went on two company-wide vacations, survived demonetisation & a lot of collective heartbreaks.</p>
+            <p>At the end of 5 years, expectedly, my mistakes caught up with me and I decided to pause and hang my founder boots awhile. Experienced, learned people took over my organisations and I set out to step back to learn and come back wiser. A few days ago, <a class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold" href='https://www.linkedin.com/in/warikoo/?originalSubdomain=in'>Ankur Warikoo's</a> <a class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold" href='https://ankurwarikoo.com/books/failure-resume/'>Failure Resume</a> made the news and reading his post was a blow; unpleasant reminder of all the lows from my hayday, but while it does bring some hurt with it, I think it is important I remember them, and remember the lessons I carry with me. </p>
+            <p>In the About section of this website, you will find a summary of my achievements. This post is meant to summarise the opposite of that - my mistakes, failures and the lessons I learned from them.</p>
+            
+            <h2 class="font-extrabold bg-gradient-to-r text-gradient from-indigo-600 to-indigo-300">Friends & Family</h2>
+            <p>To this day, I mourn the personal losses suffered the most. </p>
+            <p>In my single-minded obsession with success, building a life for myself, beating the world and so on, I de-prioritised my relationships with friends and family, year after year, always slotting the emotional responsibilities I had towards the people that stood by me. </p>
+            <p>A few years in and most of my formerly thick friendships had eroded and I was left near alone in the bustling city of Gurgaon. I needed friends when the going got rough - needed love, motivation and support - but having pushed people away for so long, spending 16 hour workdays in the office by myself (afraid it’ll all fall apart if i don’t), I (understandably) had barely any left.</p>
+            <p>What’s ironic is that I invested a laughable amount of money and time in networking programs and events, building my contact list, but no one left to contact in the very end.</p>
+
+            <h2 class="font-extrabold bg-gradient-to-r text-gradient from-indigo-600 to-indigo-300">Confidence</h2>
+            <p>Being a 19-year old founder, running a sustainable business came with a lot of praise. Every small success invited more, and I soon grew arrogant. This begeted a change in my attitude which inturn led to several bad decisions that eventually impacted the organisation and work culture.</p>
+            <p>Some decisions that fast tracked my way down were - </p>
+            <p>
+                <ul>
+                    <li>- Spending INR 1.5 m on a Russian agency to build a website for our product while we were still in beta and pre-revenue.</li>
+                    <li>- Paying INR 500K to a marketing agency, collectively wiping out nearly 50% of our funds.</li>
+                    <li>- Hiring expensive engineers we could not afford (with a runway of 6 months or less) and having to then consequently let some of them go a few months in, which wrecked their lives and careers.</li>
+                    <li>- Paying no heed to advice from partners from our accelerator, and refusing to pay attention to the fault in my ways until we were rendered near about cashless.</li>
+                </ul>
+            </p>
+
+            <h2 class="font-extrabold bg-gradient-to-r text-gradient from-indigo-600 to-indigo-300">Health</h2>
+            <p>Starting up is incredibly stressful, especially so if you're bootstrapped. This can leave lasting impact on both your physical and mental health, which in turns affects your performance, decision making skills, emotional bandwidth trickling down to -- your business. With tunnel vision permanently calibrated to revenue, new business and fundraising, absolute disregard for my health led to depression and anxiety that took months of effort to reverse. After years of functioning with 4 hours of sleep, I have now developed what looks like a permanent sleep disorder. It is not worth it, and we need to talk more about the catastrophic side-effects of hustle porn and its damaging after-shocks.</p>
+            <p>I am sure there were times when some self-reflection and sitting with myself could have redeemed a lot. I try to retrospect now to learn from them now, in preparation for when I am ready to venture into the big bad world of start-up again. </p>
+            <p>If you have worked with me (or work with me right now), I'd love to hear from you if you have feedback. If you have some of your own stories to tell, I'd love to hear those as well! I hope to accumulate all of our collective experiences to do better in my final do-over.</p>
+            <p class="text-center">~</p>
+        
+            <div class="flex flex-row w-full">
+                <div class="flex flex-col w-1/2">
+                    <%= image_tag 'my-failure-resume/masonry/1.jpeg', class: 'mason-image rounded-lg m-1' %>
+                    <%= image_tag 'my-failure-resume/masonry/2.jpg', class: 'mason-image rounded-lg m-1' %>
+                    <%= image_tag 'my-failure-resume/masonry/6.png', class: 'mason-image rounded-lg m-1' %>
+                    <%= image_tag 'my-failure-resume/masonry/7.png', class: 'mason-image rounded-lg m-1' %>
+                    <%= image_tag 'my-failure-resume/masonry/9.png', class: 'mason-image rounded-lg m-1' %>
+                </div>
+                <div class="flex flex-col w-1/2">
+                    <%= image_tag 'my-failure-resume/masonry/3.jpg', class: 'mason-image rounded-lg m-1' %>
+                    <%= image_tag 'my-failure-resume/masonry/4.jpg', class: 'mason-image rounded-lg m-1' %>
+                    <%= image_tag 'my-failure-resume/masonry/5.jpg', class: 'mason-image rounded-lg m-1' %>
+                    <%= image_tag 'my-failure-resume/masonry/8.jpg', class: 'mason-image rounded-lg m-1' %>
+                    <%= image_tag 'my-failure-resume/masonry/10.jpg', class: 'mason-image rounded-lg m-1' %>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+<%= render 'posts/disqus' %>
+
+<%= render 'pages/footer' %>
