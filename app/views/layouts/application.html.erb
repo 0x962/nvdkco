@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Navid Khan <% if @page_title %>- <%= @page_title %><% end %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -21,12 +20,9 @@
 
   <style>
     .gradient {
-
-  background: #de6262; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #de6262, #ffb88c); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #de6262, #ffb88c)
-
-
+      background: #de6262; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #de6262, #ffb88c); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #de6262, #ffb88c)
     }
     .hover\:text-gradient:hover {
         -webkit-background-clip: text;

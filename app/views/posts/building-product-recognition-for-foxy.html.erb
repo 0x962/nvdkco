@@ -1,109 +1,114 @@
+<%= render 'posts/seo', post: @post %>
 <%= render 'pages/header' %>
 
-<section class="mb-10">
-    <article class="mx-4 lg:m-auto lg:w-2/3">
-        <h1 class="text-5xl lg:text-6xl my-8 text-black font-extrabold tracking-tighter italic leading-tight lg:-mx-12"><%= @post.title %></h1>
-        <div class="my-8 tracking-tight text-gray-600 font-semibold">
-            <span class="" title=<%= @post.created_at %>><%= @post.created_at.strftime('%d %B %Y') %></span>
+<body>
+    <section class="mb-10">
+        <article class="mx-4 lg:m-auto lg:w-2/3">
+            <h1 class="text-5xl lg:text-6xl my-8 text-black font-extrabold tracking-tighter italic leading-tight lg:-mx-12"><%= @post.title %></h1>
+            <div class="my-8 tracking-tight text-gray-600 font-semibold">
+                <span class="" title=<%= @post.created_at %>><%= @post.created_at.strftime('%d %B %Y') %></span>
 
-            <span class="mx-4 p-4 border-l-2 border-gray-300 text-gray-500 font-normal">
-                <a href="/pages/about" class="border-none">
-                    <span class="ss-twitter align-middle"></span> <%= @post.view_count %> views
-                </a>
-            </span>
-        </div>
-
-        <div class="text-xl subpixel-antialiased words leading-relaxed mt-10">
-            <p>One of the features I had to design in the early days at Foxy was a quick (and dirty) product scanning feature. The idea was to let customers take a picture of a product, barcode or QR code to search for a product, instead of having to go through the conventional route.</p>
-            <p>Foxy set out with high aspirations and I did build in a couple of nifty features into the platform. However, as things go with start-ups, we ended up with more feature requirements than developer hours and needed to do something about that one page redirecting to a coming soon for quite some time now.</p>
-            <h2 class="font-extrabold bg-gradient-to-r text-gradient from-indigo-600 to-indigo-300">The Problem</h2>
-            <p>
-                Given a picture of a product, I was required to recognise the SKU and direct the user to the right product page. I was to also achieve this with sufficient efficiency - build it in a day or two, deploy in a week.
-            </p>
-            
-            <h2 class="font-extrabold bg-gradient-to-r text-gradient from-indigo-600 to-indigo-300">The Solution</h2>
-            <p>
-                There were two ways I could've approached this problem. First with the tools available at hand which involved training a model using the product images available in our database. The second involved extracting meaningful information -- logos and text from the image and passing it forward to our regular search API sitting on top of Elasticsearch.
-            </p>
-            <p>
-                Our database only had upto 5 images for each product. A lot of these images would be zoomed in to show just the text on the label, or include external characters or elements. Excluding such 'dirty' images, I was left with an average of 2 images per product. Google Vision requires a minimum number of images for each product so I had to let go of this option. Ideally, this would've been the solution of choice.
-            </p>
-            <div class="flex flex-row items-center justify-center mt-10 mb-10">
-                <% 5.times do |i| %>
-                    <div class="flex flex-col">
-                        <%= image_tag "building-product-recognition-for-foxy/product_images/image_#{i + 1}.webp", style: "width: 200px; height: 200px; object-fit: contain;" %>
-                    </div>
-                <% end %>
+                <span class="mx-4 p-4 border-l-2 border-gray-300 text-gray-500 font-normal">
+                    <a href="/pages/about" class="border-none">
+                        <span class="ss-twitter align-middle"></span> <%= @post.view_count %> views
+                    </a>
+                </span>
             </div>
-            <p>
-                I did however conduct an experiment with ~30 products that had more than 7 clean images available and the results were not great. I concluded that Google Vision must require a much cleaner and larger training dataset to deliver reliable results.
-            </p>
-            <p>
-                The second solution was relatively straightforward.
-                <%= image_tag "building-product-recognition-for-foxy/flow.png", class: "rounded-xl my-10" %>
-                <div class="flex w-full items-center justify-center mt-5 text-xs"><span class="caption">User's camera to product page</span></div>
-                <br>
-                <p>The bulk of the work was with configuring GCS as a storage option for Carrierwave and writing a short util to invoke Google's APIs to query for results.</p>
-            </p>
-            <script src="https://gist.github.com/0x962/2d5c7d75c7fbdcec6542a25b2f9864a7.js"></script>
-            <p>
-                The methods above are invoked with references to the files uploaded to GCS, and return detected logos and strings from the image. I created a quick dashboard to be able to visualize these results.
-            </p>
-            <div class="flex flex-row mb-5">
-                <div class="flex flex-col w-2/3">
-                    <p>
-                        In the sample image shown here on the right, Google Vision's OCR tool returned the following results:
-                    </p>
-                    <pre><code class="language-ruby">search_results = ["loves limone plóm hand cream", "loves", "limone", "plóm", "hand", "cream"]</code></pre>
-                    <br>
-                    <p>
-                        In this case, no logos were detected by the tool. A lot of logos are stylised text and as long as the OCR captures them, it doesn't really affect our search quality. In this case, ‘plum’ is mentioned several times in the strings detected. With a little bit of dumb intelligence, I clean the results to form the following clean string:
-                    </p>
-                    <pre><code class="language-ruby line-numbers">clean_q = "loves limone plm hand cream"</code></pre>
-                    <br>
-                    <p>
-                        Plug this query into your elasticsearch stack, and with basic indexing, we have the right product returned!
-                    </p>
+
+            <div class="text-xl subpixel-antialiased words leading-relaxed mt-10">
+                <p>One of the features I had to design in the early days at Foxy was a quick (and dirty) product scanning feature. The idea was to let customers take a picture of a product, barcode or QR code to search for a product, instead of having to go through the conventional route.</p>
+                <p>Foxy set out with high aspirations and I did build in a couple of nifty features into the platform. However, as things go with start-ups, we ended up with more feature requirements than developer hours and needed to do something about that one page redirecting to a coming soon for quite some time now.</p>
+                <h2 class="font-extrabold bg-gradient-to-r text-gradient from-indigo-600 to-indigo-300">The Problem</h2>
+                <p>
+                    Given a picture of a product, I was required to recognise the SKU and direct the user to the right product page. I was to also achieve this with sufficient efficiency - build it in a day or two, deploy in a week.
+                </p>
+                
+                <h2 class="font-extrabold bg-gradient-to-r text-gradient from-indigo-600 to-indigo-300">The Solution</h2>
+                <p>
+                    There were two ways I could've approached this problem. First with the tools available at hand which involved training a model using the product images available in our database. The second involved extracting meaningful information -- logos and text from the image and passing it forward to our regular search API sitting on top of Elasticsearch.
+                </p>
+                <p>
+                    Our database only had upto 5 images for each product. A lot of these images would be zoomed in to show just the text on the label, or include external characters or elements. Excluding such 'dirty' images, I was left with an average of 2 images per product. Google Vision requires a minimum number of images for each product so I had to let go of this option. Ideally, this would've been the solution of choice.
+                </p>
+                <div class="flex flex-row items-center justify-center mt-10 mb-10">
+                    <% 5.times do |i| %>
+                        <div class="flex flex-col">
+                            <%= image_tag "building-product-recognition-for-foxy/product_images/image_#{i + 1}.webp", style: "width: 200px; height: 200px; object-fit: contain;" %>
+                        </div>
+                    <% end %>
                 </div>
-                <div class="flex flex-col w-1/3 px-5">
-                    <%= image_tag "building-product-recognition-for-foxy/sample_input_2.jpeg", class: 'rounded-xl' %>
+                <p>
+                    I did however conduct an experiment with ~30 products that had more than 7 clean images available and the results were not great. I concluded that Google Vision must require a much cleaner and larger training dataset to deliver reliable results.
+                </p>
+                <p>
+                    The second solution was relatively straightforward.
+                    <%= image_tag "building-product-recognition-for-foxy/flow.png", class: "rounded-xl my-10" %>
+                    <div class="flex w-full items-center justify-center mt-5 text-xs"><span class="caption">User's camera to product page</span></div>
+                    <br>
+                    <p>The bulk of the work was with configuring GCS as a storage option for Carrierwave and writing a short util to invoke Google's APIs to query for results.</p>
+                </p>
+                <script src="https://gist.github.com/0x962/2d5c7d75c7fbdcec6542a25b2f9864a7.js"></script>
+                <p>
+                    The methods above are invoked with references to the files uploaded to GCS, and return detected logos and strings from the image. I created a quick dashboard to be able to visualize these results.
+                </p>
+                <div class="flex flex-row mb-5">
+                    <div class="flex flex-col w-full md:w-2/3">
+                        <p>
+                            In the sample image shown here on the right, Google Vision's OCR tool returned the following results:
+                        </p>
+                        <div class="flex flex-col w-full md:hidden md:w-1/3 px-5 pb-5 items-center justify-center">
+                            <%= image_tag "building-product-recognition-for-foxy/sample_input_2.jpeg", class: 'rounded-xl' %>
+                        </div>
+                        <code class="language-ruby">search_results = ["loves limone plóm hand cream", "loves", "limone", "plóm", "hand", "cream"]</code>
+                        <br>
+                        <p>
+                            In this case, no logos were detected by the tool. A lot of logos are stylised text and as long as the OCR captures them, it doesn't really affect our search quality. In this case, ‘plum’ is mentioned several times in the strings detected. With a little bit of dumb intelligence, I clean the results to form the following clean string:
+                        </p>
+                        <code class="language-ruby line-numbers">clean_q = "loves limone plm hand cream"</code>
+                        <br>
+                        <p>
+                            Plug this query into your elasticsearch stack, and with basic indexing, we have the right product returned!
+                        </p>
+                    </div>
+                    <div class="flex-col w-full hidden md:flex md:w-1/3 px-5">
+                        <%= image_tag "building-product-recognition-for-foxy/sample_input_2.jpeg", class: 'rounded-xl' %>
+                    </div>
                 </div>
+                <p>
+                    I did have to build in a couple of other hacks to get this working reliably, while some issues remain resolved.
+                    <ul>
+                        <li>- Google will often detect logos incorrectly, but it does so with high confidence and consistency. The popular Indian brand Kama was consistently recognized as ‘University of Pisa’. I was able to solve this by adding the term as a keyword mapped to ‘Kama’.</li>
+                        <li>- I had to account for a lot of misspellings, but it was easy enough to implement with elasticsearch.</li>
+                        <li>- I supplemented OCR and logo detection by adding barcode detection. If a barcode was seen in the image, I ran a query for the product ID instead.</li>
+                        <li>- Bad lighting significantly reduces the quality of results returned by Google's vision, and reflections on shiny bottles of makeup are a no-go.</li>
+                    </ul>
+                </p>
+                <p>
+                    <div class="flex flex-row items-center justify-center">
+                        <div class="flex flex-col px-10">
+                            <%= image_tag "building-product-recognition-for-foxy/logo_1.png", class: 'rounded-xl', style: 'height: 150px; width: 150px; object-fit: contain;', title: 'Kama Ayurveda' %>
+                            <div class="flex w-full items-center justify-center mt-5 text-xs"><span class="caption">Kama Ayurveda</span></div>
+                        </div>
+                        <div class="Flex flex-col px-10">
+                            <%= image_tag "building-product-recognition-for-foxy/logo_2.png", class: 'rounded-xl', style: 'height: 150px; width: 150px; object-fit: contain;', title: 'University of Pisa' %>
+                            <div class="flex w-full items-center justify-center mt-5 text-xs"><span class="caption">University of Pisa</span></div>
+                        </div>
+                    </div>
+                </p>
+                <p>
+                    The internet and its services have come a long way and I see new features added to it every day. Features like product scanning aren't limited to Amazon anymore, and it shouldn't take much effort adding it to your own product. A couple of lines of code, some reading, and you have a respectable MVP that’s good to go for your customers.
+                    <br>
+                    <br>
+                    Hacking together solutions and getting them to market ASAP is an interesting part of working at a start-up, and a skill people often undervalue. While the ability to write scalable and ‘clean’ code is lauded at the moment, writing code that ‘just works’ is underrated, especially when you’re (boot)strapped for time, but that’s for another blog!
+                </p>
+                <p>
+                    Fun Fact: Most of our users misunderstood what the “camera” feature in the app was for (despite text and clear explanations), and ended up uploading selfies instead of pictures of products they’re interested in!
+                </p>
+                <p class="text-center">~</p>
             </div>
-            <p>
-                I did have to build in a couple of other hacks to get this working reliably, while some issues remain resolved.
-                <ul>
-                    <li>- Google will often detect logos incorrectly, but it does so with high confidence and consistency. The popular Indian brand Kama was consistently recognized as ‘University of Pisa’. I was able to solve this by adding the term as a keyword mapped to ‘Kama’.</li>
-                    <li>- I had to account for a lot of misspellings, but it was easy enough to implement with elasticsearch.</li>
-                    <li>- I supplemented OCR and logo detection by adding barcode detection. If a barcode was seen in the image, I ran a query for the product ID instead.</li>
-                    <li>- Bad lighting significantly reduces the quality of results returned by Google's vision, and reflections on shiny bottles of makeup are a no-go.</li>
-                </ul>
-            </p>
-            <p>
-                <div class="flex flex-row items-center justify-center">
-                    <div class="flex flex-col px-10">
-                        <%= image_tag "building-product-recognition-for-foxy/logo_1.png", class: 'rounded-xl', style: 'height: 150px; width: 150px; object-fit: contain;', title: 'Kama Ayurveda' %>
-                        <div class="flex w-full items-center justify-center mt-5 text-xs"><span class="caption">Kama Ayurveda</span></div>
-                    </div>
-                    <div class="Flex flex-col px-10">
-                        <%= image_tag "building-product-recognition-for-foxy/logo_2.png", class: 'rounded-xl', style: 'height: 150px; width: 150px; object-fit: contain;', title: 'University of Pisa' %>
-                        <div class="flex w-full items-center justify-center mt-5 text-xs"><span class="caption">University of Pisa</span></div>
-                    </div>
-                </div>
-            </p>
-            <p>
-                The internet and its services have come a long way and I see new features added to it every day. Features like product scanning aren't limited to Amazon anymore, and it shouldn't take much effort adding it to your own product. A couple of lines of code, some reading, and you have a respectable MVP that’s good to go for your customers.
-                <br>
-                <br>
-                Hacking together solutions and getting them to market ASAP is an interesting part of working at a start-up, and a skill people often undervalue. While the ability to write scalable and ‘clean’ code is lauded at the moment, writing code that ‘just works’ is underrated, especially when you’re (boot)strapped for time, but that’s for another blog!
-            </p>
-            <p>
-                Fun Fact: Most of our users misunderstood what the “camera” feature in the app was for (despite text and clear explanations), and ended up uploading selfies instead of pictures of products they’re interested in!
-            </p>
-            <p class="text-center">~</p>
-        </div>
-    </article>
-</section>
+        </article>
+    </section>
+</body>
 
-<%= render 'posts/disqus' %>
-
+<%= render 'posts/disqus', post: @post %>
 <%= render 'pages/footer' %>
