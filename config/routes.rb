@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         get :about
         get :contact
         get :writing
+        get :social
     end
   end
 
