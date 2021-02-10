@@ -151,7 +151,7 @@
           I also frantically ran <code class="inline lang">update-ca-certificates</code> on the server to no effect, and tried updating the root CA store by copying in the file from a different machine. It looked like there was no easy solution to this problem, and I had to get some reading done. The reading is what lead to the discoveries I shared above.
         </p>
         <p>
-          By opening <code class="inline lang">https://api.push.apple.com</code> in a browser and inspecting the certificate provided, we learn that <code class="inline lang">api.push.apple.com</code> is signed by <code class="inline lang">Apple IST CA 2 - G1</code> , which in turn is authorized by the root CA with the common name <code class="inline lang">GeoTrust Global CA</code>.
+          By opening <code class="inline lang">https://api.push.apple.com</code> in a browser and inspecting the certificate provided, I learn that <code class="inline lang">api.push.apple.com</code> is signed by <code class="inline lang">Apple IST CA 2 - G1</code> , which in turn is authorized by the root CA with the common name <code class="inline lang">GeoTrust Global CA</code>.
         </p>
         <p>
           I learnt of <code class="inline lang">/etc/ssl/certs/ca-certificates.crt</code> and <code class="inline lang">/etc/ca-certificates.conf</code>. The first file holds all the CA certificates that we've activated in the second file. Lines that begin with a bang indicate certificates that have been deselected.
@@ -176,7 +176,7 @@
           </pre>
         </div>
         <p>
-          Grepping the response above for GeoTrust Global CA yields no results. Moving to <code class="inline lang">/etc/ca-certificates.conf</code>, we find the following lines
+          Grepping the response above for GeoTrust Global CA yields no results. Moving to <code class="inline lang">/etc/ca-certificates.conf</code>, I find the following lines
         </p>
         <div class="code">
           <pre class="lang lang-bash">
