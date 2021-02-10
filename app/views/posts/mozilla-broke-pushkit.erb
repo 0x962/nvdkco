@@ -63,7 +63,7 @@
         </div>
 
         <p>
-          Mozilla maintains an official repositories of <a href="https://hg.mozilla.org/mozilla-central/raw-file/tip/security/nss/lib/ckfw/builtins/certdata.txt" class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold">CA roots it trusts</a>.
+          Mozilla maintains an official repository of <a href="https://hg.mozilla.org/mozilla-central/raw-file/tip/security/nss/lib/ckfw/builtins/certdata.txt" class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold">CA roots it trusts</a>.
           Sometimes, other companies and organisations decide to use Mozilla's root store in their products.
         </p>
 
@@ -140,9 +140,15 @@
         </ul>
         <br>
         <p>
-          I knew little of Mozilla's root store or Symantec up until recently. A week ago, all iOS users on Foxy Live, the app I have been building for EkAnek, stopped receiving calls.
-          I send VOIP calls to our users using Apple's Pushkit, which mandates communication over HTTP2. Since <code class="inline lang">Httparty</code>, or <code class="inline lang">Net::Http</code> does not support HTTP2 yet, I use curl to make our requests to Apple's servers.
-          On investigation, I learnt of the <code class="inline lang">SSL certificate problem: unable to get local issuer certificate</code> error cURL produces when it fails to verify a certificate.
+          I knew little of Mozilla's root store or Symantec up until recently. I also did not know that ubuntu uses Mozilla's root store as well.
+        </p>
+        <p>
+          A week ago, all iOS users on Foxy Live, the app I have been building for EkAnek, stopped receiving VOIP calls.
+          I send calls to our users using Apple's Pushkit, which mandates communication over HTTP2. Since <code class="inline lang">Httparty</code>, or <code class="inline lang">Net::Http</code> does not support HTTP2 yet, I use curl to make our requests to Apple's servers.
+          These requests were failing, and as a result call notifications were not delviered.
+          On investigation, I discovered the error message<code class="inline lang">SSL certificate problem: unable to get local issuer certificate</code> error cURL produces when it fails to verify a certificate.
+          My first instinct was to add <code class="inline lang">-k</code> to the request and ignore SSL verification, but Apple does not like that and rejects your request.
+          I also frantically ran <code class="inline lang">update-ca-certificates</code> on the server to no effect, and tried updating the root CA store by copying in the file from a different machine. It looked like there was no easy solution to this problem, and I had to get some reading done. The reading is what lead to the discoveries I shared above.
         </p>
         <p>
           By opening <code class="inline lang">https://api.push.apple.com</code> in a browser and inspecting the certificate provided, we learn that <code class="inline lang">api.push.apple.com</code> is signed by <code class="inline lang">Apple IST CA 2 - G1</code> , which in turn is authorized by the root CA with the common name <code class="inline lang">GeoTrust Global CA</code>.
