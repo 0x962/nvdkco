@@ -1,0 +1,212 @@
+<%= render 'pages/header' %>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>document.querySelectorAll('.code > .lang').forEach(block => {hljs.highlightBlock(block);});</script>
+
+<section>
+    <article class="mx-4 lg:m-auto lg:w-2/3">
+      <h1 class="text-5xl lg:text-6xl my-8 text-black font-extrabold tracking-tighter italic leading-tight lg:-mx-12"><%= @post.title %></h1>
+
+      <div class="my-8 tracking-tight text-gray-600 font-semibold">
+        <span class="" title=<%= @post.created_at %>><%= @post.created_at.strftime('%d %B %Y') %></span>
+
+        <span class="mx-4 p-4 border-l-2 border-gray-300 text-gray-500 font-normal">
+          <a href="#" class="border-none">
+            <span class="ss-twitter align-middle"></span> <%= @post.view_count %> views
+          </a>
+        </span>
+      </div>
+
+      <div class="text-xl subpixel-antialiased words leading-relaxed mt-10">
+        <div class="flex flex-row">
+          <div class="flex flex-col w-2/3">
+            <p>
+              One of the most common forms of cryptography today is public-key cryptography. This system needs a <i>public key</i> and a <i>private key</i>.
+              Data is encrypted using the public key, and can be decoded using the private key. A common use of this protocol is encrypting internet traffic using SSL or TLS. (For example, configuring nginx to use HTTPS, which is HTTP over SSL/TLS).
+              This allows us to encrypt data being transferred over a protocol that itself does not provide encryption.
+            </p>
+            <p>
+              A <i>certificate</i> is allows us to share a public key, along with information about the organisation that is responsible for it.
+              A <i>Certificate Authority</i> (CA) is a trusted third party that has confirmed that the information contained in the certificate is accurate.
+            </p>
+          </div>
+          <div class="flex flex-col w-1/3">
+            <div class="flex flex-col w-full items-center justify-center">
+              <%= image_tag "mozilla-broke-pushkit/screengrab-1.png", class: "rounded-xl h-56", style: "height: 400px" %>
+              <div class="flex w-full items-center justify-center mt-5 text-xs"><span class="caption">Hacker New's Certificate</span></div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Most software that supports SSL/TLS also maintains a list of CAs whose certificates they automatically trust. If the software encounters a certificate whose authorizing CA is not in their list, they might reject the connection, or ask the user to make a choice.
+        </p>
+
+        <div class="code">
+          <pre class="lang lang-bash">
+            $ curl -v -d '{ping: "pong"}'
+            ...
+            ...
+            ...
+            * SSL certificate problem: unable to get local issuer certificate
+            * stopped the pause stream!
+              0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+            * Closing connection 0
+            curl: (60) SSL certificate problem: unable to get local issuer certificate
+            More details here: https://curl.haxx.se/docs/sslcerts.html
+
+            curl failed to verify the legitimacy of the server and therefore could not
+            establish a secure connection to it. To learn more about this situation and
+            how to fix it, please visit the web page mentioned above.
+          </pre>
+        </div>
+
+        <p>
+          Mozilla maintains an official repositories of <a href="https://hg.mozilla.org/mozilla-central/raw-file/tip/security/nss/lib/ckfw/builtins/certdata.txt" class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold">CA roots it trusts</a>.
+          Sometimes, other companies and organisations decide to use Mozilla's root store in their products.
+        </p>
+
+        <div class="text-xl subpixel-antialiased words leading-relaxed mt-10">
+          <figure>
+            <blockquote>
+              When distributing binary and source code versions of Firefox, Thunderbird, and other Mozilla-related software products, Mozilla includes with such software a set of X.509v3 root certificates for various Certification Authorities (CAs). The included certificates have their "trust bits" set for various purposes, so that the software in question can use the CA certificates to anchor a chain of trust for certificates used by SSL servers and S/MIME email users without having to ask users for further permission or information.
+              <figcaption>— <cite>Mozilla Root Source Policy</cite></figcaption>
+            </blockquote>
+          </figure>
+        </div>
+
+        <p>
+          Here's where things get interesting. In 2017, a consensus proposal was reached among multiple browser makers for a graduated distrust of Symantec roots.
+          The wiki <a href="https://wiki.mozilla.org/CA:Symantec_Issues" class="border-solid border-b-2 border-b-gray-600 text-gray-600 font-semibold">here</a> maintains a list of issues with this particular CA.
+          It makes for an interesting read, and I would encourage you to visit the page.
+        </p>
+        <ul class="small">
+          <li>- Issue B: Issuance of 1024-bit Certificate Expiring After Deadline (Dec 2013 - Jan 2014)</li>
+          <li>- Issue C: Unauthorized EV Issuance by RAs (January 2014 - February 2015)</li>
+          <li>- Issue D: Test Certificate Misissuance (April 2009 - September 2015)</li>
+          <li>- Issue E: Domain Validation Vulnerability (October 2015)</li>
+          <li>- Issue F: Symantec Audit Issues 2015 (December 2014 - November 2015)</li>
+          <li>- Issue H: SHA-1 Issuance After Deadline (January 2016)</li>
+          <li>- Issue J: SHA-1 Issuance After Deadline, Again (February 2016)</li>
+          <li>- Issue L: Cross-Signing the US Federal Bridge (2009 - July 2016)</li>
+          <li>- Issue N: Premature Manual Signing Using SHA-1 (July 2016)</li>
+          <li>- Issue P: UniCredit Sub CA Failing To Follow BRs (March - October 2016)</li>
+          <li>- Issue Q: Symantec Audit Issues 2016 (December 2015 - November 2016)</li>
+          <li>- STRUCK: Issue R: Insecure Issuance API (2013 or earlier - November 2016)</li>
+          <li>-	Issue T: CrossCert Misissuances (January 2010 - January 2017)</li>
+          <li>- Issue V: GeoRoot Program Audit Issues (2013 or earlier - January 2017)</li>
+          <li>- Issue W: RA Program Audit Issues (2013 or earlier - January 2017)</li>
+          <li>- STRUCK: Issue X: Incomplete RA Program Remediation (February - March 2017)</li>
+          <li>- Issue Y: Under-audited or Unaudited Unconstrained Intermediates (December 2015 - April 2017)</li>
+        </ul>
+        <br>
+        <p>
+          The proposal published a timeline that would phase out CA:Symantec from Mozilla's root program.
+        </p>
+        <ul class="small">
+          <li>- <i>December 1st, 2017</i>: Symantec to implement "Managed CA" proposal</li>
+          <li>- <i>January 2018 (Firefox 58)</i>: Notices in the Developer Console will warn about Symantec certificates issued before 2016-06-01, to encourage site owners to migrate their TLS certs.</li>
+          <li>- <i>May 2018 (Firefox 60)</i>: Websites will show an untrusted connection error if they have a TLS cert issued before 2016-06-01 that chains up to a Symantec root.</li>
+          <li>- <i>October 2018 (Firefox 63)</i>: Removal/distrust of Symantec roots, with caveats described below.</li>
+        </ul>
+        <br>
+        <p>
+          As a result of distrust of CA:Symantec, a bunch of certificates would be removed from NSS.
+        </p>
+        <ul class="small">
+          <%
+            [
+            'GeoTrust Primary Certification Authority',
+            'GeoTrust Universal CA',
+            'GeoTrust Universal CA 2',
+            'Symantec Class 1 Public Primary Certification Authority - G4',
+            'Symantec Class 1 Public Primary Certification Authority - G6',
+            'Symantec Class 2 Public Primary Certification Authority - G4',
+            'Symantec Class 2 Public Primary Certification Authority - G6',
+            'thawte Primary Root CA',
+            'thawte Primary Root CA - G2',
+            'thawte Primary Root CA - G3',
+            'VeriSign Class 1 Public PCA - G3',
+            'VeriSign Class 2 Public PCA - G3',
+            'VeriSign Class 3 Public Primary Certification Authority - G3',
+            'VeriSign Class 3 Public Primary Certification Authority - G4',
+            'VeriSign Class 3 Public Primary Certification Authority - G5',
+            'VeriSign Universal Root Certification Authority',
+          ].each do |x|
+          %>
+            <li>- <%= x %></li>
+          <% end %>
+        </ul>
+        <br>
+        <p>
+          I knew little of Mozilla's root store or Symantec up until recently. A week ago, all iOS users on Foxy Live, the app I have been building for EkAnek, stopped receiving calls.
+          I send VOIP calls to our users using Apple's Pushkit, which mandates communication over HTTP2. Since <code class="inline lang">Httparty</code>, or <code class="inline lang">Net::Http</code> does not support HTTP2 yet, I use curl to make our requests to Apple's servers.
+          On investigation, I learnt of the <code class="inline lang">SSL certificate problem: unable to get local issuer certificate</code> error cURL produces when it fails to verify a certificate.
+        </p>
+        <p>
+          By opening <code class="inline lang">https://api.push.apple.com</code> in a browser and inspecting the certificate provided, we learn that <code class="inline lang">api.push.apple.com</code> is signed by <code class="inline lang">Apple IST CA 2 - G1</code> , which in turn is authorized by the root CA with the common name <code class="inline lang">GeoTrust Global CA</code>.
+        </p>
+        <p>
+          I learnt of <code class="inline lang">/etc/ssl/certs/ca-certificates.crt</code> and <code class="inline lang">/etc/ca-certificates.conf</code>. The first file holds all the CA certificates that we've activated in the second file. Lines that begin with a bang indicate certificates that have been deselected.
+          By running <code class="inline lang">awk -v cmd='openssl x509 -noout -subject' '/BEGIN/{close(cmd)};{print | cmd}' < /etc/ssl/certs/ca-certificates.crt | less</code> I am able to view a list of all authorities trusted by my OS.
+        </p>
+        <div class="code">
+          <pre class="lang lang-bash">
+            ...
+            ...
+            ...
+            subject=C = PL, O = Unizeto Technologies S.A., OU = Certum Certification Authority, CN = Certum Trusted Network CA
+            subject=C = PL, O = Unizeto Technologies S.A., OU = Certum Certification Authority, CN = Certum Trusted Network CA 2
+            subject=C = EU, L = Madrid (see current address at www.camerfirma.com/address), serialNumber = A82743287, O = AC Camerfirma S.A., CN = Chambers of Commerce Root - 2008
+            subject=C = GB, ST = Greater Manchester, L = Salford, O = Comodo CA Limited, CN = AAA Certificate Services
+            subject=O = "Cybertrust, Inc", CN = Cybertrust Global Root
+            subject=C = DE, O = D-Trust GmbH, CN = D-TRUST Root Class 3 CA 2 2009
+            subject=C = DE, O = D-Trust GmbH, CN = D-TRUST Root Class 3 CA 2 EV 2009
+            subject=O = Digital Signature Trust Co., CN = DST Root CA X3
+            ...
+            ...
+            ...
+          </pre>
+        </div>
+        <p>
+          Grepping the response above for GeoTrust Global CA yields no results. Moving to <code class="inline lang">/etc/ca-certificates.conf</code>, we find the following lines
+        </p>
+        <div class="code">
+          <pre class="lang lang-bash">
+            ...
+            ...
+             !mozilla/GeoTrust_Global_CA.crt
+             !mozilla/GeoTrust_Primary_Certification_Authority.crt
+             mozilla/GeoTrust_Primary_Certification_Authority_-_G2.crt
+             !mozilla/GeoTrust_Primary_Certification_Authority_-_G3.crt
+             !mozilla/GeoTrust_Universal_CA.crt
+             !mozilla/GeoTrust_Universal_CA_2.crt
+            ...
+            ...
+          </pre>
+        </div>
+        <p>
+          It looks like Ubuntu decided to update it's root CA store at some point, which told it to stop trusting GeoTrust certificates. This in turn made it difficult to connect to api.push.apple.com with ssl verification.
+          The temporary solution I implemented to fix this was downloading <code class="inline lang">api-push-apple-com-chain.pem</code> from the certificate inspector in Firefox, and passing it as a CA certificate in the cURL command I am using with the <code class="inline lang">--cacert</code> flag.
+          A solution could be editing the conf file to allow GeoTrust certificates, but I am unsure about how and when this file is automatically updated; and if changes are discarded. If you have better understanding of how this works on Ubuntu, I'd love to hear from you.
+        </p>
+        <p>
+          Debugging this issue was an interesting learning experience, and this was probably the first time I paid attention to SSL certificates and tried to understand how SSL works in general. <code class="inline lang">certbot -d</code> makes it possible for you to limit your understanding of SSL to the very basics, and lazy thinking made me do just that.
+          There was little help available online around this issue, and searching for <code class="inline lang">SSL certificate problem: unable to get local issuer certificate</code> yields the same 2 - 3 answers of people stuck with incorrect php.ini configurations.
+          I am surprised this change did not cause bigger problems, and by the lack of chatter on the internet. Surely a larger set of users were affected and are unable to connect to services.
+        </p>
+        <p>
+          Surprisingly, I am still able to access <code class="inline lang">api.push.apple.com</code> safely on Firefox's latest release, but not on the developer edition, where it rejects the certificate.
+          While I am still learning to blog, and structure information in a manner that is accessible and easy to skim, I hope this helps people who end up with the same issue.
+        </p>
+        <p>
+          I also wonder what exploits or attacks this makes possible.
+        </p>
+        <p class="text-center">~</p>
+      </div>
+    </article>
+</section>
+
+<%= render 'posts/disqus', post: @post %>
+<%= render 'pages/footer' %>
